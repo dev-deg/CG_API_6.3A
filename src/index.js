@@ -1,4 +1,6 @@
 const express = require("express");
+const path = require("path");
+const data = require(path.resolve(__dirname, "../usernames.json"));
 
 //Setting up an instance of express server
 const app = express();
@@ -10,7 +12,9 @@ var reqCount = 0;
 const getRandomInt = (max) => Math.floor(Math.random() * max);
 
 //localhost:4000
-app.get("/", (req, res) => res.send("Hello World"));
+app.get("/", (req, res) => res.send("Hello Loser!"));
+
+app.get("/username", (req, res) => res.send(data.usernames[Math.floor(Math.random() * data.usernames.length)]));
 
 //localhost:4000/random
 app.post("/random", (req, res) => {
