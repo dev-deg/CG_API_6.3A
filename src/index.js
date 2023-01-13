@@ -22,10 +22,12 @@ app.post("/username", (req, res) => {
   }
   if (start == "") {
     //Input field is empty
-    res.send(data.usernames[Math.floor(Math.random() * data.usernames.length)]);
+    res.send(data.usernames[getRandomInt(data.usernames.length)]);
   } else {
     //User started typing
-    res.send(data.usernames.filter((u) => (u.startsWith(start) ? u : null)));
+    const filteredList = data.usernames.filter((u) => (u.startsWith(start) ? u : null));
+
+    res.send(filteredList[getRandomInt(filteredList.length)].toUpperCase());
   }
 });
 
