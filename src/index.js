@@ -12,9 +12,22 @@ var reqCount = 0;
 const getRandomInt = (max) => Math.floor(Math.random() * max);
 
 //localhost:4000
-app.get("/", (req, res) => res.send("Hello Loser!"));
+app.get("/", (req, res) => res.send("Hello World!"));
 
-app.get("/username", (req, res) => res.send(data.usernames[Math.floor(Math.random() * data.usernames.length)]));
+//localhost:4000/username
+app.post("/username", (req, res) => {
+  var start = "";
+  if (req.query.start) {
+    start = req.query.start;
+  }
+  if (start == "") {
+    //Input field is empty
+    res.send(data.usernames[Math.floor(Math.random() * data.usernames.length)]);
+  } else {
+    //User started typing
+    res.send(data.usernames.filter((u) => (u.startsWith(start) ? u : null)));
+  }
+});
 
 //localhost:4000/random
 app.post("/random", (req, res) => {
