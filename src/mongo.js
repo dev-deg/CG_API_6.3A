@@ -18,6 +18,18 @@ module.exports.CreateUser = async (name, surname, email, password) => {
   return await dbConnection.collection("Users").insertOne({ name: name, surname: surname, email: email, password: HashPassword(password) });
 };
 
+module.exports.ValidateUser = async (email, password) => {
+  const result = await dbConnection
+    .collection("Users")
+    .find({ email: email, password: HashPassword(password) })
+    .toArray();
+  if (result.length == 1) {
+    return "Hello " + result[0].name + " " + result[0].surname;
+  } else {
+    return "Error: Incorrect credentials!";
+  }
+};
+
 module.exports.Close = () => {
   client.close();
 };
