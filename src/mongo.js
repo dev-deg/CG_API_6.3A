@@ -1,10 +1,7 @@
 const { MongoClient } = require("mongodb");
-
-// Connection URL
-const connectionString = ``;
+const url = require(path.resolve(__dirname, "../config/db.json"));
 
 const client = new MongoClient(url);
-
 const dbName = "CG";
 
 async function connect() {

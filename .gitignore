@@ -1,3 +1,6 @@
+# DB Configuration
+/config/
+
 # Logs
 logs
 *.log
