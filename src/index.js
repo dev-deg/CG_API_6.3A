@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const data = require(path.resolve(__dirname, "../usernames.json"));
-const { ConnectToDb } = require("./mongo");
+const { ConnectToDb, LoadDb } = require("./mongo");
 //Setting up an instance of express server
 const app = express();
 
@@ -46,6 +46,8 @@ app.post("/random", (req, res) => {
 //Else output the error
 ConnectToDb()
   .then((r) => {
+    LoadDb();
+    console.log("Connected successfully to database server");
     app.listen(4000, () => console.log(`API listening in port 4000`));
   })
   .catch((e) => console.log(e));
