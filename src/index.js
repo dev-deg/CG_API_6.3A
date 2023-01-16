@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const data = require(path.resolve(__dirname, "../usernames.json"));
-const { ConnectToDb, LoadDb } = require("./mongo");
+const { ConnectToDb, LoadDb, CreateUser, Close } = require("./mongo");
 //Setting up an instance of express server
 const app = express();
 
@@ -39,6 +39,20 @@ app.post("/random", (req, res) => {
     max = parseInt(req.query.max);
   }
   return res.send(JSON.stringify({ request: reqCount, random: getRandomInt(max).toString() }));
+});
+
+app.post("/register", (req, res) => {
+  const name = req.query.name;
+  const surname = req.query.surname;
+  const email = req.query.email;
+  const password = req.query.password;
+  if (name != null && surname != null && email != null && password != null) {
+    //register the user
+    CreateUser(name, surname, email, password).then((r) => Close());
+    res.send(email + " registered successfully");
+  } else {
+    res.send("Error: Unable to create user!");
+  }
 });
 
 //Connect to the DB
