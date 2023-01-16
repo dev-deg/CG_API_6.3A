@@ -1,10 +1,11 @@
 const { MongoClient } = require("mongodb");
-const url = require(path.resolve(__dirname, "../config/db.json"));
+const path = require("path");
+const db = require(path.resolve(__dirname, "../config/db.json"));
 
-const client = new MongoClient(url);
+const client = new MongoClient(db.url);
 const dbName = "CG";
 
-async function connect() {
+module.exports.ConnectToDb = async () => {
   // Use connect method to connect to the server
   await client.connect();
   console.log("Connected successfully to server");
@@ -12,4 +13,4 @@ async function connect() {
   const collection = db.collection("Users");
 
   return null;
-}
+};

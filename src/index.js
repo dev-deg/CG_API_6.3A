@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const data = require(path.resolve(__dirname, "../usernames.json"));
-
+const { ConnectToDb } = require("./mongo");
 //Setting up an instance of express server
 const app = express();
 
@@ -41,5 +41,11 @@ app.post("/random", (req, res) => {
   return res.send(JSON.stringify({ request: reqCount, random: getRandomInt(max).toString() }));
 });
 
-//Starts the server
-app.listen(4000, () => console.log(`API listening in port 4000`));
+//Connect to the DB
+//If the connection is successful, start the server (listening)
+//Else output the error
+ConnectToDb()
+  .then((r) => {
+    app.listen(4000, () => console.log(`API listening in port 4000`));
+  })
+  .catch((e) => console.log(e));
